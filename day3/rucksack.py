@@ -1,3 +1,4 @@
+from typing import Set
 import string
 
 priorities1 = 0
@@ -5,11 +6,10 @@ priorities2 = 0
 
 weights = {}
 
-for x, y in zip(range(1, 27), string.ascii_lowercase):
+#create dict with char to priority 
+for x, y in zip(range(1, 53), string.ascii_lowercase+string.ascii_uppercase):
     weights[y] = x
 
-for x, y in zip(range(27, 53), string.ascii_uppercase):
-    weights[y] = x
 group = []
 with open("input.txt", "r") as inp:
     for line in inp:
@@ -23,11 +23,10 @@ with open("input.txt", "r") as inp:
         # part2 every 3 lines is a group of rucksacks
         group.append(line)
         if len(group) == 3:
-            rucksack1 = set(group[0].strip())
-            rucksack2 = set(group[1].strip())
-            rucksack3 = set(group[2].strip())
-            common = rucksack1.intersection(rucksack2).intersection(rucksack3)
-            for c in common:
+            rucksack1:Set[str] = set(group[0].strip())
+            rucksack2:Set[str] = set(group[1].strip())
+            rucksack3:Set[str] = set(group[2].strip())
+            for c in rucksack1.intersection(rucksack2).intersection(rucksack3):
                 priorities2 += weights[c]
             group = []
 print("part1: ", priorities1)
